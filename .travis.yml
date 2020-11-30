@@ -10,7 +10,9 @@ before_install:
 - while sleep 5m; do echo "=====[ $SECONDS seconds, still building... ]====="; done &
 
 script:
+- export DOCKER_CLI_EXPERIMENTAL=enabled
 - bash init.sh
+- docker buildx create --use --name mybuild
 - docker buildx build --platform linux/amd64,linux/arm64 -t wise2c/playbook:$TRAVIS_BRANCH .
 
 deploy:
